@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Themed Console Logging Buttons</title>
+    <style>
+        /* CSS remains the same blue theme for interactivity and visuals */
+        :root {
+            --primary-blue: #007bff;
+            --darker-blue: #0056b3;
+            --light-blue: #e8f0fe;
+            --cancel-red: #dc3545;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .button-container {
+            background-color: white;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--darker-blue);
+            margin-bottom: 20px;
+        }
+
+        #message {
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .save-btn {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        .save-btn:hover { background-color: var(--darker-blue); transform: translateY(-2px); }
+        .cancel-btn { background-color: var(--cancel-red); color: white; }
+        .cancel-btn:hover { background-color: #c82333; transform: scale(1.05); }
+
+        .success-message { color: green; }
+        .error-message { color: var(--cancel-red); }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <h1>Console Logging Demo</h1>
+        <p id="message">Open your console (F12) and click the buttons!</p>
+        <div class="buttons">
+            <button id="saveBtn" class="btn save-btn">Save Data</button>
+            <button id="cancelBtn" class="btn cancel-btn">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const messageElement = document.getElementById('message');
+            const initialMessage = 'Open your console (F12) and click the buttons!';
+
+            // --- SAVE BUTTON LOGIC ---
+            saveBtn.addEventListener('click', () => {
+                // 1. Log the desired message to the browser console
+                console.log('data as saved'); 
+                
+                // 2. Update the on-screen message for visual feedback
+                messageElement.textContent = 'Data saved and logged to console.';
+                messageElement.classList.remove('error-message');
+                messageElement.classList.add('success-message');
+                
+                // Reset screen message after a delay
+                setTimeout(() => {
+                    messageElement.textContent = initialMessage;
+                    messageElement.classList.remove('success-message');
+                }, 3000); 
+            });
+
+            // --- CANCEL BUTTON LOGIC ---
+            cancelBtn.addEventListener('click', () => {
+                // You can log a separate message for the cancel action
+                console.log('Action canceled.');
+                
+                // Update the on-screen message
+                messageElement.textContent = 'Action cancelled. Check console for log.';
+                messageElement.classList.remove('success-message');
+                messageElement.classList.add('error-message');
+
+                // Reset screen message after a delay
+                setTimeout(() => {
+                    messageElement.textContent = initialMessage;
+                    messageElement.classList.remove('error-message');
+                }, 3000); 
+            });
+        });
+    </script>
+</body>
+</html>
